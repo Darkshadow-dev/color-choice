@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Changing Button</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+            position: relative;
+        }
+
+        #colorButton {
+            padding: 20px 40px;
+            font-size: 20px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background-color: #6200ea;
+            color: #fff;
+        }
+
+        #colorBoxes {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .colorBox, #colorChangeCount {
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 10px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .colorBox {
+            width: 50px;
+            height: 50px;
+        }
+
+        .colorText {
+            margin-top: 10px;
+            font-size: 12px;
+            color: #555;
+        }
+
+        #colorChangeCount {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+        }
+        #backButton {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background-color: #6200ea;
+            color: #fff;
+        }
+
+        #backButton:hover {
+            background-color: #3700b3;
+        }
+    </style>
+</head>
+<body>
+    <button id="backButton">Back to Main</button>
+    <div id="colorChangeCount">Changes: 0</div>
+    <div id="colorBoxes">
+        <div class="colorBox" id="previousColorBox">
+            <div class="colorText" id="previousColorText">None</div>
+        </div>
+        <div class="colorBox" id="twoChangesAgoBox">
+            <div class="colorText" id="twoChangesAgoText">None</div>
+        </div>
+        <div class="colorBox" id="threeChangesAgoBox">
+            <div class="colorText" id="threeChangesAgoText">None</div>
+        </div>
+        <div class="colorBox" id="fourChangesAgoBox">
+            <div class="colorText" id="fourChangesAgoText">None</div>
+        </div>
+        <div class="colorBox" id="fiveChangesAgoBox">
+            <div class="colorText" id="fiveChangesAgoText">None</div>
+        </div>
+    </div>
+    <button id="colorButton">Click Me!</button>
+    <script>
+        const backButton = document.getElementById('backButton');
+        const button = document.getElementById('colorButton');
+        const previousColorBox = document.getElementById('previousColorBox');
+        const previousColorText = document.getElementById('previousColorText');
+        const twoChangesAgoBox = document.getElementById('twoChangesAgoBox');
+        const twoChangesAgoText = document.getElementById('twoChangesAgoText');
+        const threeChangesAgoBox = document.getElementById('threeChangesAgoBox');
+        const threeChangesAgoText = document.getElementById('threeChangesAgoText');
+        const fourChangesAgoBox = document.getElementById('fourChangesAgoBox');
+        const fourChangesAgoText = document.getElementById('fourChangesAgoText');
+        const fiveChangesAgoBox = document.getElementById('fiveChangesAgoBox');
+        const fiveChangesAgoText = document.getElementById('fiveChangesAgoText');
+        const colorChangeCountDiv = document.getElementById('colorChangeCount');
+
+        let changeCount = 0;
+        let previousColors = ['#ffffff', '#ffffff', '#ffffff', '#ffffff', '#ffffff'];
+
+        button.addEventListener('click', () => {
+            const newColor = getRandomColor();
+
+            // Update the boxes
+            previousColorBox.style.backgroundColor = previousColors[4];
+            previousColorText.textContent = previousColors[4];
+
+            fiveChangesAgoBox.style.backgroundColor = previousColors[0];
+            fiveChangesAgoText.textContent = previousColors[0];
+
+            fourChangesAgoBox.style.backgroundColor = previousColors[1];
+            fourChangesAgoText.textContent = previousColors[1];
+
+            threeChangesAgoBox.style.backgroundColor = previousColors[2];
+            threeChangesAgoText.textContent = previousColors[2];
+
+            twoChangesAgoBox.style.backgroundColor = previousColors[3];
+            twoChangesAgoText.textContent = previousColors[3];
+
+            // Update the color history
+            previousColors = [previousColors[1], previousColors[2], previousColors[3], previousColors[4], newColor];
+
+            // Update the button color
+            button.style.backgroundColor = newColor;
+            changeCount++;
+            colorChangeCountDiv.textContent = `Changes: ${changeCount}`;
+        });
+        backButton.addEventListener('click', () => {
+            window.location.href = 'navigate back to the first.html'; // Change this to the correct path if necessary
+        });
+
+        function getRandomColor() {
+            const letters = '0123456789ABCDEF';
+            let color = '#';
+            for (let i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Palette Grid</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+            position: relative;
+        }
+
+        #colorChangeButton {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background-color: #6200ea;
+            color: #fff;
+            margin-bottom: 20px;
+        }
+
+        #colorChangeButton:hover {
+            background-color: #3700b3;
+        }
+
+        #palette {
+            display: grid;
+            grid-template-columns: repeat(5, 50px);
+            grid-template-rows: repeat(5, 70px);
+            gap: 40px;
+        }
+
+        .colorCell {
+            width: 75px;
+            height: 75px;
+            border: 1px solid #000;
+            border-radius: 5px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .colorText {
+            font-size: 12px;
+            color: #555;
+            margin-top: 5px;
+        }
+
+        #countDisplay {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 16px;
+            color: #555;
+        }
+
+        #backButton {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background-color: #6200ea;
+            color: #fff;
+        }
+
+        #backButton:hover {
+            background-color: #3700b3;
+        }
+    </style>
+</head>
+<body>
+    <div id="countDisplay">Changes: 0</div>
+    <button id="colorChangeButton">Change Colors</button>
+    <div id="palette"></div>
+    <button id="backButton">Back to Main</button>
+
+    <script>
+        const button = document.getElementById('colorChangeButton');
+        const palette = document.getElementById('palette');
+        const countDisplay = document.getElementById('countDisplay');
+        const backButton = document.getElementById('backButton');
+
+        let changeCount = 0;
+
+        // Create a 5x5 grid of divs
+        for (let i = 0; i < 25; i++) {
+            const cellContainer = document.createElement('div');
+            cellContainer.classList.add('colorCell');
+            
+            const cell = document.createElement('div');
+            cell.style.width = '100%';
+            cell.style.height = '100%';
+            cell.style.borderRadius = '5px';
+            cellContainer.appendChild(cell);
+            
+            const colorText = document.createElement('div');
+            colorText.classList.add('colorText');
+            cellContainer.appendChild(colorText);
+            
+            palette.appendChild(cellContainer);
+        }
+
+        const cells = document.querySelectorAll('.colorCell div:first-child');
+        const colorTexts = document.querySelectorAll('.colorText');
+
+        button.addEventListener('click', () => {
+            cells.forEach((cell, index) => {
+                const newColor = getRandomColor();
+                cell.style.backgroundColor = newColor;
+                colorTexts[index].textContent = newColor;
+            });
+            changeCount++;
+            countDisplay.textContent = `Changes: ${changeCount}`;
+        });
+
+        backButton.addEventListener('click', () => {
+            window.location.href = 'navigate back to the first.html'; // Change this to the correct path if necessary
+        });
+
+        function getRandomColor() {
+            const letters = '0123456789ABCDEF';
+            let color = '#';
+            for (let i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+    </script>
+</body>
+</html>
